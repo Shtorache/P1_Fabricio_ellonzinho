@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lançamentos da SpaceX</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 20px;
+        }
+        h1, h2, h3, h4 {
+            text-align: center;
+        }
+        #filter {
+            margin-bottom: 20px;
+            padding: 10px;
+            width: 100%;
+            max-width: 300px;
+            display: block;
+            margin: 0 auto;
+        }
+        #year-filter {
+            margin-bottom: 20px;
+            padding: 10px;
+            width: 100%;
+            max-width: 300px;
+            display: block;
+            margin: 0 auto;
+        }
+        #filter-button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+        #filter-button:hover {
+            background-color: #0056b3;
+        }
+
+        #show-favorites {
+            text-align: center;
+            margin-left: 700px;
+        }
+
+        #counts-list {
+            margin-left: 310px;
+            margin-top: 0px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .item {
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .item img {
+            width: 50px; 
+            height: auto;
+            margin-right: 10px;
+            border-radius: 5px;
+        }
+
+        .item:hover {
+            background: #e0e0e0;
+        }
+
+        .favorite {
+            color: red;
+        }
+
+        .details {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lançamentos da SpaceX</h1>
+    <h3>Filtrar:</h3>
+    <select id="year-filter">
+        <option value="">Selecione o ano...</option>
+    </select>
+    
+    <label>
+        <input type="checkbox" id="show-favorites" />
+        Mostrar favoritos
+    </label>
+    <button id="filter-button">Filtrar</button>
+    
+    <ul id="launch-list"></ul>
+
+    <h4>Contagem de lançamentos no ano de:</h4>
+    <ul id="counts-list"></ul>
+    
+    <h2>Favoritos</h2>
+    <ul id="favorites-list"></ul>
+
+    <!-- Modal para exibir detalhes -->
+    <div id="launch-details-modal" style="display:none; background: #fff; border: 1px solid #ccc; padding: 20px; position: absolute; top: 20%; left: 30%; width: 40%; z-index: 1000;">
+        <h3>Detalhes do Lançamento</h3>
+        <p id="launch-details"></p>
+        <button onclick="closeDetails()">Fechar</button>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
