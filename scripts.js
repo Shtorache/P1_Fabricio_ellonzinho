@@ -8,7 +8,6 @@ let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 let currentIndex = 0;  
 const HowMuch = 10; 
 
-
 async function fetchLaunches() {
     try {
         const response = await fetch('https://api.spacexdata.com/v4/launches');
@@ -23,7 +22,6 @@ async function fetchLaunches() {
     }
 }
 
-
 function populateYearFilter() {
     const years = [...new Set(launches.map(launch => new Date(launch.date_utc).getFullYear()))];
     years.forEach(year => {
@@ -34,10 +32,9 @@ function populateYearFilter() {
     });
 }
 
-
 function displayLaunches(launchesToDisplay) {
     launchesToDisplay.forEach(launch => {
-        const li = document.createElement('li');
+        const li = document.createElement('li'); 
         li.className = 'item';
         li.innerHTML = `
             <img src="${launch.links.patch.small || 'https://via.placeholder.com/50'}" alt="${launch.name}">
@@ -47,23 +44,18 @@ function displayLaunches(launchesToDisplay) {
             </div>
         `;
 
-        
-
         const checkbox = li.querySelector('.favorite-checkbox');
 
-        
         checkbox.addEventListener('click', (e) => {
             e.stopPropagation();   
             toggleFavorite(launch.id, e.target.checked);
         });
 
-        
         li.addEventListener('click', () => showLaunchDetails(launch));
 
-        launchList.appendChild('li');
+        launchList.appendChild(li); 
     });
 }
-
 
 function loadMoreLaunches() {
     const remainingLaunches = launches.slice(currentIndex, currentIndex + HowMuch);
@@ -72,13 +64,11 @@ function loadMoreLaunches() {
         displayLaunches(remainingLaunches);
         currentIndex += HowMuch;
     } else {
-    
         currentIndex = 0;
         displayLaunches(launches.slice(currentIndex, currentIndex + HowMuch));
         currentIndex += HowMuch;
     }
 }
-
 
 function handleScroll() {
     const scrollPosition = window.innerHeight + window.scrollY;
@@ -88,7 +78,6 @@ function handleScroll() {
     }
 }
 
-
 function displayLaunchCounts(year) {
     const launchCounts = countLaunchesByYear(year);
     const countsList = document.getElementById('counts-list'); 
@@ -96,12 +85,11 @@ function displayLaunchCounts(year) {
     countsList.innerHTML = ''; 
 
     if (year) {
-        const li = document.createElement('li');
+        const li = document.createElement('li'); 
         li.textContent = ` ${year}: ${launchCounts}`;
         countsList.appendChild(li);
     }
 }
-
 
 function countLaunchesByYear(selectedYear) {
     return launches.filter(launch => {
@@ -110,11 +98,9 @@ function countLaunchesByYear(selectedYear) {
     }).length;
 }
 
-
 filterButton.addEventListener('click', () => {
     filterLaunchesByYear();
 });
-
 
 function filterLaunchesByYear() {
     const selectedYear = yearFilter.value;
@@ -140,7 +126,6 @@ function filterLaunchesByYear() {
     displayLaunchCounts(selectedYear); 
 }
 
-
 function toggleFavorite(launchId, isFavorite) {
     if (isFavorite) {
         if (!favorites.includes(launchId)) {
@@ -153,7 +138,6 @@ function toggleFavorite(launchId, isFavorite) {
     displayFavorites();
 }
 
-
 function showLaunchDetails(launch) {
     const modal = document.getElementById('launch-details-modal');
     const details = document.getElementById('launch-details');
@@ -165,7 +149,6 @@ function showLaunchDetails(launch) {
     modal.style.display = 'block';
 }
 
-
 function closeDetails() {
     const modal = document.getElementById('launch-details-modal');
     modal.style.display = 'none';
@@ -176,15 +159,12 @@ function displayFavorites() {
     favorites.forEach(id => {
         const launch = launches.find(l => l.id === id);
         if (launch) {
-            const li = document.createElement(li);
+            const li = document.createElement('li'); 
             li.textContent = `${launch.name} (${new Date(launch.date_utc).toLocaleDateString()})`;
             favoritesList.appendChild(li);
         }
     });
 }
 
-
 fetchLaunches();
-
-
 window.addEventListener('scroll', handleScroll);
